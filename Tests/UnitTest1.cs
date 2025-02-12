@@ -33,8 +33,44 @@
             Assert.Equal(expectedOutput, output);
         }
 
-        private string GetLevelOrderTraversalOutput(Node root)
+        [Fact]
+        public void TestEmptyTreeLevelOrderTraversal()
         {
+            Node? root = null;
+            var output = GetLevelOrderTraversalOutput(root);
+            var expectedOutput = "";
+            Assert.Equal(expectedOutput, output);
+        }
+
+        [Fact]
+        public void TestSingleNodeTreeLevelOrderTraversal()
+        {
+            var root = new Node(1);
+            var output = GetLevelOrderTraversalOutput(root);
+            var expectedOutput = "1 ";
+            Assert.Equal(expectedOutput, output);
+        }
+
+        [Fact]
+        public void TestUnbalancedTreeLevelOrderTraversal()
+        {
+            var root = new Node(1,
+                new Node(2,
+                    new Node(3,
+                        new Node(4)
+                    )
+                )
+            );
+
+            var output = GetLevelOrderTraversalOutput(root);
+            var expectedOutput = "1 \n2 \n3 \n4 ";
+            Assert.Equal(expectedOutput, output);
+        }
+
+        private string GetLevelOrderTraversalOutput(Node? root)
+        {
+            if (root == null) return "";
+
             Queue<(Node Current, int Level)> queue = new();
             queue.Enqueue((root, 1));
             int currentLevel = 1;
